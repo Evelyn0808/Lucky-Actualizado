@@ -1,0 +1,26 @@
+{
+  "name": "aplicacion-lucky",
+  "version": "1.0.0",
+  "description": "Plataforma de rescate y adopción de animales",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "bcrypt": "^6.0.0",
+    "jose": "^6.2.4",
+    "next": "^16.2.12",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/node": "^26.1.1",
+    "@types/react": "^19.2.17",
+    "prisma": "^5.22.0",
+    "typescript": "^5.9.3"
+  }
+}

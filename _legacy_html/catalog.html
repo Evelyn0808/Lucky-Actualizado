@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestros animales - Fundación Lucky</title>
+    <meta name="description" content="Conoce a nuestros animales en adopción y encuentra a tu mejor amigo.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="logo">
+            <img src="logo.png" alt="Logo Fundación Lucky" class="logo-header">
+            <h2>Fundación Lucky Bienestar Animal</h2>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="catalog.html">Nuestros animales</a></li>
+                <li><a href="#">Anuncios</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+        <div class="header-actions">
+            <a href="#" class="btn-text">Iniciar Sesión</a>
+            <a href="#" class="btn-primary">Donar Ahora</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="catalog-page">
+        <!-- Titles -->
+        <section class="catalog-header">
+            <h1 class="page-title">Nuestros animales en adopción</h1>
+            <p class="page-subtitle">Encuentra a tu mejor amigo.</p>
+        </section>
+
+        <!-- Filter Bar -->
+        <section class="filter-section">
+            <div class="filter-bar">
+                <div class="filter-tags">
+                    <button class="filter-tag active">Todos</button>
+                    <button class="filter-tag">Perros</button>
+                    <button class="filter-tag">Gatos</button>
+                    <button class="filter-tag">Cachorros</button>
+                    <button class="filter-tag">Otros</button>
+                </div>
+                <div class="filter-action">
+                    <button class="btn-filter" id="btn-filter">
+                        Filtros <i class="fa-solid fa-sliders"></i>
+                    </button>
+                    <!-- Dropdown/Modal -->
+                    <div class="filter-modal" id="filter-modal">
+                        <h3>Tipo de Animal</h3>
+                        <ul>
+                            <li><label><input type="checkbox"> Perros</label></li>
+                            <li><label><input type="checkbox"> Gatos</label></li>
+                            <li><label><input type="checkbox"> Aves</label></li>
+                            <li><label><input type="checkbox"> Conejos</label></li>
+                            <li><label><input type="checkbox"> Roedores</label></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Animal Grid -->
+        <section class="catalog-grid-wrapper">
+            <div class="catalog-grid">
+                <!-- Card 1 -->
+                <a href="detail.html" class="catalog-card">
+                    <div class="img-wrapper">
+                        <img src="https://placedog.net/400/400?id=1" alt="Max">
+                    </div>
+                    <div class="catalog-info">
+                        <h3>Max</h3>
+                        <p>2 años / Macho</p>
+                        <p>Mediano</p>
+                    </div>
+                </a>
+                <!-- Card 2 -->
+                <a href="detail.html" class="catalog-card">
+                    <div class="img-wrapper">
+                        <img src="https://placekitten.com/400/400" alt="Luna">
+                    </div>
+                    <div class="catalog-info">
+                        <h3>Luna</h3>
+                        <p>1 año / Hembra</p>
+                        <p>Pequeño</p>
+                    </div>
+                </a>
+                <!-- Card 3 -->
+                <a href="detail.html" class="catalog-card">
+                    <div class="img-wrapper">
+                        <img src="https://placedog.net/400/400?id=2" alt="Mia">
+                    </div>
+                    <div class="catalog-info">
+                        <h3>Mia</h3>
+                        <p>6 meses / Hembra</p>
+                        <p>Mediano</p>
+                    </div>
+                </a>
+                <!-- Card 4 -->
+                <a href="detail.html" class="catalog-card">
+                    <div class="img-wrapper">
+                        <img src="https://placekitten.com/401/401" alt="Simba">
+                    </div>
+                    <div class="catalog-info">
+                        <h3>Simba</h3>
+                        <p>3 meses / Macho</p>
+                        <p>Pequeño</p>
+                    </div>
+                </a>
+                <!-- Card 5 -->
+                <a href="detail.html" class="catalog-card">
+                    <div class="img-wrapper">
+                        <img src="https://placedog.net/400/400?id=3" alt="Bella">
+                    </div>
+                    <div class="catalog-info">
+                        <h3>Bella</h3>
+                        <p>1.5 años / Hembra</p>
+                        <p>Mediano</p>
+                    </div>
+                </a>
+                <!-- Card 6 -->
+                <a href="detail.html" class="catalog-card">
+                    <div class="img-wrapper">
+                        <img src="https://placedog.net/400/400?id=4" alt="Thor">
+                    </div>
+                    <div class="catalog-info">
+                        <h3>Thor</h3>
+                        <p>3 años / Macho</p>
+                        <p>Grande</p>
+                    </div>
+                </a>
+                <!-- Card 7 -->
+                <a href="detail.html" class="catalog-card">
+                    <div class="img-wrapper">
+                        <img src="https://placedog.net/400/400?id=5" alt="Toby">
+                    </div>
+                    <div class="catalog-info">
+                        <h3>Toby</h3>
+                        <p>2 años / Macho</p>
+                        <p>Pequeño</p>
+                    </div>
+                </a>
+                <!-- Card 8 -->
+                <a href="detail.html" class="catalog-card">
+                    <div class="img-wrapper">
+                        <img src="https://placekitten.com/402/402" alt="Misha">
+                    </div>
+                    <div class="catalog-info">
+                        <h3>Misha</h3>
+                        <p>1 año / Hembra</p>
+                        <p>Pequeño</p>
+                    </div>
+                </a>
+                <!-- Card 9 -->
+                <a href="detail.html" class="catalog-card">
+                    <div class="img-wrapper">
+                        <img src="https://placedog.net/400/400?id=6" alt="Koda">
+                    </div>
+                    <div class="catalog-info">
+                        <h3>Koda</h3>
+                        <p>4 años / Macho</p>
+                        <p>Grande</p>
+                    </div>
+                </a>
+                <!-- Card 10 -->
+                <a href="detail.html" class="catalog-card">
+                    <div class="img-wrapper">
+                        <img src="https://placekitten.com/403/403" alt="Garfield">
+                    </div>
+                    <div class="catalog-info">
+                        <h3>Garfield</h3>
+                        <p>5 años / Macho</p>
+                        <p>Mediano</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Pagination -->
+        <section class="pagination-section">
+            <div class="pagination">
+                <a href="#" class="page-link prev"><i class="fa-solid fa-chevron-left"></i></a>
+                <a href="#" class="page-link">1</a>
+                <a href="#" class="page-link active">2</a>
+                <a href="#" class="page-link">3</a>
+                <span class="page-dots">...</span>
+                <a href="#" class="page-link">10</a>
+                <a href="#" class="page-link next"><i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+        </section>
+
+        <!-- Bottom CTA Banner -->
+        <section class="cta-banner">
+            <div class="cta-content">
+                <h2>¿Nos puedes adoptar?</h2>
+                <p>Aún así puedes hacer la diferencia con tu ayuda.</p>
+                <a href="donaciones.html" class="btn-primary large cta-btn">Quiero ayudar</a>
+            </div>
+            <div class="cta-image">
+                <img src="https://placekitten.com/800/800" alt="Gato naranja">
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <h2>SIGUENOS EN NUESTRAS REDES SOCIALES</h2>
+        <div class="social-icons">
+            <a href="#" class="social-icon" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-icon" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-icon" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="#" class="social-icon" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+        <p class="copyright">&copy; 2026 RescateAnimal. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- JavaScript for Filter Modal -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const btnFilter = document.getElementById("btn-filter");
+            const filterModal = document.getElementById("filter-modal");
+            
+            btnFilter.addEventListener("click", () => {
+                filterModal.classList.toggle("show");
+            });
+            
+            window.addEventListener("click", (e) => {
+                if (!btnFilter.contains(e.target) && !filterModal.contains(e.target)) {
+                    filterModal.classList.remove("show");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
