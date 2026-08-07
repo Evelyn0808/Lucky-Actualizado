@@ -1,26 +1,54 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 interface Animal {
-    id: number;
-    foto: string;
-    nombre: string;
-    especie: string;
-    raza: string;
-    edad: string;
-    estado: string;
-    statusDot: string;
-    visible: boolean;
+    id: string; // Prisma uses String UUID
+    name: string;
+    species: string;
+    breed: string | null;
+    age: string | null;
+    description: string | null;
+    imageUrl: string | null;
+    createdAt: string;
 }
 
 export default function GestionMascotas() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [animales, setAnimales] = useState<Animal[]>([
-        { id: 1, foto: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=100&h=100&fit=crop", nombre: "Max", especie: "Gato", raza: "Persa", edad: "2 años", estado: "Disponible", statusDot: "dot-green", visible: true },
-        { id: 2, foto: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=100&h=100&fit=crop", nombre: "Tommy", especie: "Perro", raza: "Labrador", edad: "5 años", estado: "En proceso", statusDot: "dot-yellow", visible: true },
-        { id: 3, foto: "https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=100&h=100&fit=crop", nombre: "Copito", especie: "Conejo", raza: "Cabeza de león", edad: "1 año", estado: "Adoptada", statusDot: "dot-blue", visible: true }
-    ]);
+    const [animales, setAnimales] = useState<Animal[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    // Form state
+    const [formData, setFormData] = useState({
+        name: '',
+        species: '',
+        breed: '',
+        age: '',
+        description: '',
+    });
+    const [imageBase64, setImageBase64] = useState<string | null>(null);
+
+    // Fetch animals on mount
+    useEffect(() => {
+        fetchAnimals();
+    }, []);
+
+    const fetchAnimals = async () => {
+        setIsLoading(true);
+        try {
+            const res = await fetch('/api/animales');
+            const data = await res.json();
+            if (res.ok) {
+                setAnimales(data);
+            } else {
+                console.error("Error fetching animals:", data);
+            }
+        } catch (error) {
+            console.error("Fetch error:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const openModal = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -29,23 +57,51 @@ export default function GestionMascotas() {
 
     const closeModal = () => {
         setIsModalOpen(false);
+        setFormData({ name: '', species: '', breed: '', age: '', description: '' });
+        setImageBase64(null);
     };
 
-    const handleEditName = (id: number, currentName: string) => {
-        const newName = prompt("Ingresa el nuevo nombre para el animal:", currentName);
-        if (newName && newName.trim() !== "") {
-            setAnimales(prev => prev.map(a => a.id === id ? { ...a, nombre: newName.trim() } : a));
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImageBase64(reader.result as string);
+            };
+            reader.readAsDataURL(file);
         }
     };
 
-    const handleDelete = (id: number) => {
-        if (window.confirm("¿Estás seguro de que deseas eliminar a este animal?")) {
-            setAnimales(prev => prev.filter(a => a.id !== id));
-        }
-    };
+    const handleFormSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        
+        const payload = {
+            name: formData.name,
+            species: formData.species,
+            breed: formData.breed,
+            age: formData.age,
+            description: formData.description,
+            imageUrl: imageBase64
+        };
 
-    const handleToggleVisibility = (id: number) => {
-        setAnimales(prev => prev.map(a => a.id === id ? { ...a, visible: !a.visible } : a));
+        try {
+            const res = await fetch('/api/animales', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                closeModal();
+                fetchAnimals(); // Refresh list
+            } else {
+                const errorData = await res.json();
+                alert(`Error: ${errorData.error}`);
+            }
+        } catch (error) {
+            console.error("Error saving:", error);
+            alert("Error de red al guardar.");
+        }
     };
 
     return (
@@ -73,7 +129,7 @@ export default function GestionMascotas() {
                 {/* Right Main Column */}
                 <main className="solicitudes-main gestion-main">
                     <div className="gestion-header">
-                        <h2>Animales</h2>
+                        <h2>Animales en BD</h2>
                         <button onClick={openModal} className="btn-agregar-animal">Agregar Animal</button>
                     </div>
 
@@ -86,51 +142,30 @@ export default function GestionMascotas() {
                                     <th>Especie</th>
                                     <th>Raza</th>
                                     <th>Edad</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {animales.map((animal) => (
-                                    <tr key={animal.id} style={{ opacity: animal.visible ? 1 : 0.4, transition: 'opacity 0.3s' }}>
-                                        <td><img src={animal.foto} alt={animal.nombre} className="animal-foto" /></td>
-                                        <td>{animal.nombre}</td>
-                                        <td>{animal.especie}</td>
-                                        <td>{animal.raza}</td>
-                                        <td>{animal.edad}</td>
-                                        <td>
-                                            <div className="status-indicator">
-                                                <span className={`status-dot ${animal.statusDot}`}></span> {animal.estado}
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div className="action-icons">
-                                                <i 
-                                                    className="fa-solid fa-pencil" 
-                                                    onClick={() => handleEditName(animal.id, animal.nombre)} 
-                                                    style={{ cursor: 'pointer', color: '#666' }} 
-                                                    title="Editar Nombre">
-                                                </i>
-                                                <i 
-                                                    className="fa-solid fa-trash" 
-                                                    onClick={() => handleDelete(animal.id)} 
-                                                    style={{ cursor: 'pointer', color: '#ff4d4d' }} 
-                                                    title="Eliminar">
-                                                </i>
-                                                <i 
-                                                    className={`fa-solid ${animal.visible ? 'fa-eye' : 'fa-eye-slash'}`} 
-                                                    onClick={() => handleToggleVisibility(animal.id)} 
-                                                    style={{ cursor: 'pointer', color: '#666' }} 
-                                                    title={animal.visible ? "Ocultar" : "Mostrar"}>
-                                                </i>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                                {animales.length === 0 && (
-                                    <tr>
-                                        <td colSpan={7} style={{ textAlign: 'center', padding: '20px' }}>No hay animales registrados.</td>
-                                    </tr>
+                                {isLoading ? (
+                                    <tr><td colSpan={5} style={{ textAlign: 'center', padding: '20px' }}>Cargando...</td></tr>
+                                ) : animales.length === 0 ? (
+                                    <tr><td colSpan={5} style={{ textAlign: 'center', padding: '20px' }}>No hay animales registrados en la base de datos.</td></tr>
+                                ) : (
+                                    animales.map((animal) => (
+                                        <tr key={animal.id}>
+                                            <td>
+                                                <img 
+                                                    src={animal.imageUrl || 'https://via.placeholder.com/100'} 
+                                                    alt={animal.name} 
+                                                    className="animal-foto" 
+                                                    style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '5px' }}
+                                                />
+                                            </td>
+                                            <td>{animal.name}</td>
+                                            <td>{animal.species}</td>
+                                            <td>{animal.breed || '-'}</td>
+                                            <td>{animal.age || '-'}</td>
+                                        </tr>
+                                    ))
                                 )}
                             </tbody>
                         </table>
@@ -140,34 +175,34 @@ export default function GestionMascotas() {
                 {/* Modal Overlay */}
                 <div className={`modal-overlay ${isModalOpen ? 'show' : ''}`} onClick={(e) => { if(e.target === e.currentTarget) closeModal(); }}>
                     <div className="modal-container">
-                        <h2>Agregar Animal</h2>
-                        <form>
+                        <h2>Agregar Animal a la BD</h2>
+                        <form onSubmit={handleFormSubmit}>
                             <div className="form-group">
                                 <label htmlFor="nombre">Nombre</label>
-                                <input type="text" id="nombre" name="nombre" placeholder="Ej: Max" required />
+                                <input type="text" id="nombre" value={formData.name} onChange={(e)=>setFormData({...formData, name: e.target.value})} placeholder="Ej: Max" required />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="especie">Especie</label>
-                                <select id="especie" name="especie" required defaultValue="">
+                                <select id="especie" value={formData.species} onChange={(e)=>setFormData({...formData, species: e.target.value})} required>
                                     <option value="" disabled>Selecciona una especie</option>
-                                    <option value="perro">Perro</option>
-                                    <option value="gato">Gato</option>
-                                    <option value="conejo">Conejo</option>
-                                    <option value="ave">Ave</option>
-                                    <option value="otro">Otro</option>
+                                    <option value="Perro">Perro</option>
+                                    <option value="Gato">Gato</option>
+                                    <option value="Conejo">Conejo</option>
+                                    <option value="Ave">Ave</option>
+                                    <option value="Otro">Otro</option>
                                 </select>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="raza">Raza</label>
-                                <input type="text" id="raza" name="raza" placeholder="Ej: Mestizo" required />
+                                <input type="text" id="raza" value={formData.breed} onChange={(e)=>setFormData({...formData, breed: e.target.value})} placeholder="Ej: Mestizo" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="edad">Edad</label>
-                                <input type="text" id="edad" name="edad" required />
+                                <input type="text" id="edad" value={formData.age} onChange={(e)=>setFormData({...formData, age: e.target.value})} placeholder="Ej: 2 años" />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="foto_simple">Agregar imagen (máx. 5MB)</label>
-                                <input type="file" id="foto_simple" name="foto_simple" accept="image/*" />
+                                <label htmlFor="foto_simple">Agregar imagen</label>
+                                <input type="file" id="foto_simple" accept="image/*" onChange={handleFileChange} />
                             </div>
                             <div className="modal-actions">
                                 <button type="button" className="btn-cancel" onClick={closeModal}>Cancelar</button>

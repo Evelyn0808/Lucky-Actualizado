@@ -37,8 +37,8 @@ model Animal {
   name        String
   species     String
   breed       String?
-  age         Int?     // in months
-  description String
+  age         String?
+  description String?
   imageUrl    String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

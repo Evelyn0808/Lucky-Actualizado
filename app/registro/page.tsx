@@ -32,7 +32,7 @@ export default function RegisterPage() {
       
       if (res.ok) {
         // Enviar al login
-        router.push('/login?registered=true');
+        router.push('/iniciar-sesion?registered=true');
       } else {
         setError(data.error || 'Error al registrar');
       }

@@ -26,9 +26,9 @@ export default function LoginPage() {
       
       if (res.ok) {
         if (data.role === 'ADMIN' || data.role === 'SERVICIOS') {
-          router.push('/dashboard');
+          router.push('/');
         } else {
-          router.push('/perfil');
+          router.push('/');
         }
       } else {
         setError(data.error || 'Error al iniciar sesión');

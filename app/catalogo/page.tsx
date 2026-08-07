@@ -1,11 +1,41 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 
+interface Animal {
+    id: string;
+    name: string;
+    species: string;
+    breed: string | null;
+    age: string | null;
+    description: string | null;
+    imageUrl: string | null;
+}
+
 export default function Catalog() {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [animales, setAnimales] = useState<Animal[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        fetchAnimals();
+    }, []);
+
+    const fetchAnimals = async () => {
+        try {
+            const res = await fetch('/api/animales');
+            if (res.ok) {
+                const data = await res.json();
+                setAnimales(data);
+            }
+        } catch (error) {
+            console.error("Error fetching animals:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
     <>
@@ -48,74 +78,30 @@ export default function Catalog() {
 
             {/* Animal Grid */}
             <section className="catalog-grid-wrapper">
-                <div className="catalog-grid">
-                    {/* Card 1 */}
-                    <Link href="/detail" className="catalog-card">
-                        <div className="img-wrapper">
-                            <img src="https://placedog.net/400/400?id=1" alt="Max" />
-                        </div>
-                        <div className="catalog-info">
-                            <h3>Max</h3>
-                            <p>2 años / Macho</p>
-                            <p>Mediano</p>
-                        </div>
-                    </Link>
-                    {/* Card 2 */}
-                    <Link href="/detail" className="catalog-card">
-                        <div className="img-wrapper">
-                            <img src="https://placekitten.com/400/400" alt="Luna" />
-                        </div>
-                        <div className="catalog-info">
-                            <h3>Luna</h3>
-                            <p>1 año / Hembra</p>
-                            <p>Pequeño</p>
-                        </div>
-                    </Link>
-                    {/* Card 3 */}
-                    <Link href="/detail" className="catalog-card">
-                        <div className="img-wrapper">
-                            <img src="https://placedog.net/400/400?id=2" alt="Mia" />
-                        </div>
-                        <div className="catalog-info">
-                            <h3>Mia</h3>
-                            <p>6 meses / Hembra</p>
-                            <p>Mediano</p>
-                        </div>
-                    </Link>
-                    {/* Card 4 */}
-                    <Link href="/detail" className="catalog-card">
-                        <div className="img-wrapper">
-                            <img src="https://placekitten.com/401/401" alt="Simba" />
-                        </div>
-                        <div className="catalog-info">
-                            <h3>Simba</h3>
-                            <p>3 meses / Macho</p>
-                            <p>Pequeño</p>
-                        </div>
-                    </Link>
-                    {/* Card 5 */}
-                    <Link href="/detail" className="catalog-card">
-                        <div className="img-wrapper">
-                            <img src="https://placedog.net/400/400?id=3" alt="Bella" />
-                        </div>
-                        <div className="catalog-info">
-                            <h3>Bella</h3>
-                            <p>1.5 años / Hembra</p>
-                            <p>Mediano</p>
-                        </div>
-                    </Link>
-                    {/* Card 6 */}
-                    <Link href="/detail" className="catalog-card">
-                        <div className="img-wrapper">
-                            <img src="https://placedog.net/400/400?id=4" alt="Thor" />
-                        </div>
-                        <div className="catalog-info">
-                            <h3>Thor</h3>
-                            <p>3 años / Macho</p>
-                            <p>Grande</p>
-                        </div>
-                    </Link>
-                </div>
+                {isLoading ? (
+                    <p style={{ textAlign: 'center', width: '100%' }}>Cargando animales...</p>
+                ) : animales.length === 0 ? (
+                    <p style={{ textAlign: 'center', width: '100%' }}>Aún no hay animales en adopción.</p>
+                ) : (
+                    <div className="catalog-grid">
+                        {animales.map((animal) => (
+                            <Link key={animal.id} href={`/detail?id=${animal.id}`} className="catalog-card">
+                                <div className="img-wrapper">
+                                    <img 
+                                        src={animal.imageUrl || 'https://via.placeholder.com/400'} 
+                                        alt={animal.name} 
+                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                    />
+                                </div>
+                                <div className="catalog-info">
+                                    <h3>{animal.name}</h3>
+                                    <p>{animal.age || 'Edad desconocida'} / {animal.species}</p>
+                                    <p>{animal.breed || 'Sin raza'}</p>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                )}
             </section>
         </main>
         <Footer />
