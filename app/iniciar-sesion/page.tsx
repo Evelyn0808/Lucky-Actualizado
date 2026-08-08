@@ -9,6 +9,7 @@ export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -26,7 +27,7 @@ export default function LoginPage() {
       
       if (res.ok) {
         if (data.role === 'ADMIN' || data.role === 'SERVICIOS') {
-          router.push('/');
+          router.push('/gestion-mascotas');
         } else {
           router.push('/');
         }
@@ -61,14 +62,33 @@ export default function LoginPage() {
               required 
               style={{ padding: '12px', borderRadius: 'var(--radius-md)', border: '1px solid #ccc' }}
             />
-            <input 
-              type="password" 
-              placeholder="Contraseña" 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required 
-              style={{ padding: '12px', borderRadius: 'var(--radius-md)', border: '1px solid #ccc' }}
-            />
+            <div style={{ position: 'relative', width: '100%' }}>
+              <input 
+                type={showPassword ? "text" : "password"} 
+                placeholder="Contraseña" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required 
+                style={{ width: '100%', padding: '12px', paddingRight: '40px', borderRadius: 'var(--radius-md)', border: '1px solid #ccc' }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: 'absolute',
+                  right: '12px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: '#6b7280'
+                }}
+                title={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+              >
+                <i className={`fa-solid ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+              </button>
+            </div>
             
             <Link href="#" style={{ fontSize: '0.9rem', color: 'var(--color-primary)', textAlign: 'right' }}>
               ¿Olvidaste la contraseña?

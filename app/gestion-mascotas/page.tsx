@@ -10,6 +10,7 @@ interface Animal {
     age: string | null;
     description: string | null;
     imageUrl: string | null;
+    status: string;
     createdAt: string;
 }
 
@@ -104,6 +105,26 @@ export default function GestionMascotas() {
         }
     };
 
+    const handleStatusChange = async (id: string, newStatus: string) => {
+        try {
+            const res = await fetch(`/api/animales/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: newStatus })
+            });
+
+            if (res.ok) {
+                // Update local state directly to feel fast
+                setAnimales(animales.map(a => a.id === id ? { ...a, status: newStatus } : a));
+            } else {
+                alert("Error actualizando el estado");
+            }
+        } catch (error) {
+            console.error("Error updating status:", error);
+            alert("Error de red al actualizar estado.");
+        }
+    };
+
     return (
         <div className="solicitudes-body" style={{ minHeight: '100vh', margin: 0 }}>
             <div className="dashboard-layout">
@@ -129,7 +150,7 @@ export default function GestionMascotas() {
                 {/* Right Main Column */}
                 <main className="solicitudes-main gestion-main">
                     <div className="gestion-header">
-                        <h2>Animales en BD</h2>
+                        <h2>Animales en adopción</h2>
                         <button onClick={openModal} className="btn-agregar-animal">Agregar Animal</button>
                     </div>
 
@@ -142,6 +163,7 @@ export default function GestionMascotas() {
                                     <th>Especie</th>
                                     <th>Raza</th>
                                     <th>Edad</th>
+                                    <th>Estado</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -164,6 +186,22 @@ export default function GestionMascotas() {
                                             <td>{animal.species}</td>
                                             <td>{animal.breed || '-'}</td>
                                             <td>{animal.age || '-'}</td>
+                                            <td>
+                                                <select 
+                                                    value={animal.status} 
+                                                    onChange={(e) => handleStatusChange(animal.id, e.target.value)}
+                                                    style={{ 
+                                                        padding: '4px 8px', 
+                                                        borderRadius: '4px',
+                                                        border: '1px solid #cbd5e1',
+                                                        backgroundColor: animal.status === 'ADOPTADO' ? '#dcfce7' : animal.status === 'PENDIENTE' ? '#fef08a' : '#f1f5f9'
+                                                    }}
+                                                >
+                                                    <option value="DISPONIBLE">Disponible</option>
+                                                    <option value="PENDIENTE">Pendiente</option>
+                                                    <option value="ADOPTADO">Adoptado</option>
+                                                </select>
+                                            </td>
                                         </tr>
                                     ))
                                 )}

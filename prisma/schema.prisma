@@ -13,6 +13,12 @@ enum Role {
   USUARIO
 }
 
+enum AnimalStatus {
+  DISPONIBLE
+  PENDIENTE
+  ADOPTADO
+}
+
 enum AdoptionStatus {
   PENDING
   APPROVED
@@ -40,6 +46,7 @@ model Animal {
   age         String?
   description String?
   imageUrl    String?
+  status      AnimalStatus @default(DISPONIBLE)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

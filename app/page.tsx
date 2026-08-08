@@ -1,8 +1,14 @@
 import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { prisma } from '../lib/prisma';
 
-export default function Home() {
+export default async function Home() {
+  const animales = await prisma.animal.findMany({
+    take: 4,
+    orderBy: { createdAt: 'desc' }
+  });
+
   return (
     <>
       <Navbar />
@@ -80,54 +86,44 @@ export default function Home() {
       <section className="adoption-section">
           <h2 className="section-title">Animales en adopción</h2>
           <div className="adoption-grid">
-              {/* Card 1 */}
-              <div className="pet-card">
-                  <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                      alt="Max" />
-                  <div className="pet-info">
-                      <h3>Max</h3>
-                      <div className="pet-meta">
-                          <span>2 años</span> | <span>Macho</span> | <span>Mediano</span>
+              {animales.map((animal) => (
+                  <Link key={animal.id} href={`/catalogo/${animal.id}`} className="catalog-card" style={{ textDecoration: 'none', color: 'inherit' }}>
+                      <div className="img-wrapper" style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
+                          <img 
+                              src={animal.imageUrl || 'https://via.placeholder.com/400'} 
+                              alt={animal.name} 
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          />
+                          {animal.status === 'ADOPTADO' && (
+                              <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                  <span style={{ transform: 'rotate(-15deg)', background: '#22c55e', color: 'white', padding: '8px 16px', borderRadius: '24px', fontSize: '18px', fontWeight: '900', boxShadow: '0 4px 15px rgba(0,0,0,0.3)', border: '2px solid white' }}>
+                                      🎉 ¡Felizmente Adoptado!
+                                  </span>
+                              </div>
+                          )}
+                          {animal.status === 'PENDIENTE' && (
+                              <span style={{ position: 'absolute', top: '12px', right: '12px', background: '#fef08a', color: '#854d0e', padding: '4px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 'bold', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
+                                  ⏳ En proceso de adopción
+                              </span>
+                          )}
+                          <span className="badge-tag" style={{ position: 'absolute', bottom: '12px', left: '12px', background: '#ea580c', color: 'white', padding: '4px 10px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>📍 Quito Centro</span>
                       </div>
-                      <p className="pet-desc">Juguetón y lleno de energía. Ideal para familias activas.</p>
-                  </div>
-              </div>
-              {/* Card 2 */}
-              <div className="pet-card">
-                  <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                      alt="Luna" />
-                  <div className="pet-info">
-                      <h3>Luna</h3>
-                      <div className="pet-meta">
-                          <span>1 año</span> | <span>Hembra</span> | <span>Pequeño</span>
+                      <div className="catalog-info" style={{ padding: '20px', display: 'flex', flexDirection: 'column' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                              <h3 style={{ margin: 0, fontSize: '20px', fontWeight: '800' }}>{animal.name}</h3>
+                              <span style={{ fontSize: '12px', background: '#fff7ed', color: '#ea580c', padding: '4px 8px', borderRadius: '8px', fontWeight: 'bold' }}>{animal.age || '1 año'}</span>
+                          </div>
+                          <p style={{ margin: '0 0 16px 0', fontSize: '13px', color: '#64748b', fontWeight: '600' }}>{animal.breed || 'Sin raza'} • {animal.species}</p>
+                          
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', borderTop: '1px solid #f1f5f9', paddingTop: '16px' }}>
+                              <span style={{ fontSize: '12px', color: '#059669', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '4px' }}>🛡️ Salud Al Día</span>
+                              <div className="btn-conocer-mas" style={{ display: 'inline-block', textAlign: 'center', pointerEvents: 'none', background: '#ea580c', color: '#ffffff', padding: '8px 16px', borderRadius: '10px', fontWeight: 'bold', fontSize: '12px' }}>
+                                  Conocer más 🐾
+                              </div>
+                          </div>
                       </div>
-                      <p className="pet-desc">Muy cariñosa y tranquila. Le encanta dormir al sol.</p>
-                  </div>
-              </div>
-              {/* Card 3 */}
-              <div className="pet-card">
-                  <img src="https://images.unsplash.com/photo-1537151608804-ea6f23c344ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                      alt="Rocky" />
-                  <div className="pet-info">
-                      <h3>Rocky</h3>
-                      <div className="pet-meta">
-                          <span>4 años</span> | <span>Macho</span> | <span>Grande</span>
-                      </div>
-                      <p className="pet-desc">Protector y leal. Un excelente compañero de aventuras.</p>
-                  </div>
-              </div>
-              {/* Card 4 */}
-              <div className="pet-card">
-                  <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                      alt="Mia" />
-                  <div className="pet-info">
-                      <h3>Mia</h3>
-                      <div className="pet-meta">
-                          <span>6 meses</span> | <span>Hembra</span> | <span>Mediano</span>
-                      </div>
-                      <p className="pet-desc">Curiosa y divertida. Lista para descubrir el mundo contigo.</p>
-                  </div>
-              </div>
+                  </Link>
+              ))}
           </div>
       </section>
 

@@ -11,8 +11,9 @@ export async function proxy(request: NextRequest) {
   // Rutas que requieren autenticación
   const isDashboardRoute = request.nextUrl.pathname.startsWith('/dashboard');
   const isAdminRoute = request.nextUrl.pathname.startsWith('/admin');
+  const isGestionRoute = request.nextUrl.pathname.startsWith('/gestion-mascotas');
 
-  if (isDashboardRoute || isAdminRoute) {
+  if (isDashboardRoute || isAdminRoute || isGestionRoute) {
     if (!token) {
       return NextResponse.redirect(new URL('/iniciar-sesion', request.url));
     }
@@ -21,13 +22,16 @@ export async function proxy(request: NextRequest) {
       const { payload } = await jwtVerify(token, SECRET);
       const role = payload.role as string;
 
-      // Verificación de roles
-      if (isAdminRoute && role !== 'admin') {
+      // Verificación de roles (roles en Prisma son mayúsculas: ADMIN, SERVICIOS, USUARIO)
+      if (isAdminRoute && role !== 'ADMIN') {
         return NextResponse.redirect(new URL('/dashboard', request.url));
       }
       
-      if (isDashboardRoute && !['admin', 'servicios'].includes(role)) {
-         // Un usuario normal no debería ver el dashboard de refugio
+      if (isGestionRoute && role !== 'ADMIN') {
+        return NextResponse.redirect(new URL('/iniciar-sesion', request.url));
+      }
+      
+      if (isDashboardRoute && !['ADMIN', 'SERVICIOS'].includes(role)) {
          return NextResponse.redirect(new URL('/perfil', request.url));
       }
 
@@ -42,5 +46,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/admin/:path*'],
+  matcher: ['/dashboard/:path*', '/admin/:path*', '/gestion-mascotas/:path*'],
 };
