@@ -125,6 +125,27 @@ export default function GestionMascotas() {
         }
     };
 
+    const handleDelete = async (id: string) => {
+        if (!window.confirm('¿Estás seguro de que deseas eliminar este animal? Esta acción no se puede deshacer.')) {
+            return;
+        }
+
+        try {
+            const res = await fetch(`/api/animales/${id}`, {
+                method: 'DELETE',
+            });
+
+            if (res.ok) {
+                setAnimales(animales.filter(a => a.id !== id));
+            } else {
+                alert("Error al eliminar el animal");
+            }
+        } catch (error) {
+            console.error("Error deleting:", error);
+            alert("Error de red al eliminar.");
+        }
+    };
+
     return (
         <div className="solicitudes-body" style={{ minHeight: '100vh', margin: 0 }}>
             <div className="dashboard-layout">
@@ -164,6 +185,7 @@ export default function GestionMascotas() {
                                     <th>Raza</th>
                                     <th>Edad</th>
                                     <th>Estado</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -201,6 +223,22 @@ export default function GestionMascotas() {
                                                     <option value="PENDIENTE">Pendiente</option>
                                                     <option value="ADOPTADO">Adoptado</option>
                                                 </select>
+                                            </td>
+                                            <td>
+                                                <button 
+                                                    onClick={() => handleDelete(animal.id)}
+                                                    style={{
+                                                        padding: '6px 12px',
+                                                        backgroundColor: '#ef4444',
+                                                        color: 'white',
+                                                        border: 'none',
+                                                        borderRadius: '4px',
+                                                        cursor: 'pointer',
+                                                        fontSize: '0.85rem'
+                                                    }}
+                                                >
+                                                    Eliminar
+                                                </button>
                                             </td>
                                         </tr>
                                     ))
