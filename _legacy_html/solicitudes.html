@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitudes de Adopción - Fundación Lucky</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body class="solicitudes-body">
+    <div class="dashboard-layout">
+        
+        <!-- Left Sidebar (White Background) -->
+        <aside class="solicitudes-sidebar">
+            <div class="sidebar-header">
+                <img src="logo.png" alt="Logo Fundación Lucky" class="sidebar-logo">
+                <h3>Lucky Bienestar Animal</h3>
+            </div>
+            <nav class="sidebar-nav-clean">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="#">Gestión de Mascotas</a></li>
+                    <li><a href="#">Solicitudes de Adopción</a></li>
+                    <li><a href="#">Gestión de Usuarios</a></li>
+                    <li><a href="#">Donaciones</a></li>
+                    <li><a href="#">Reportes</a></li>
+                    <li><a href="#">Configuración</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Right Main Column (Orange Background) -->
+        <main class="solicitudes-main">
+            <h2 class="solicitudes-title">Mis solicitudes de adopción</h2>
+            
+            <div class="solicitudes-grid-container">
+                <!-- Headers -->
+                <div class="solicitudes-header-row">
+                    <div>Animal</div>
+                    <div>FECHA</div>
+                    <div>ESTADO</div>
+                </div>
+
+                <!-- Row 1 -->
+                <div class="solicitudes-row">
+                    <div class="solicitud-animal">
+                        <img src="https://placedog.net/100/100?id=11" alt="Max">
+                        <span class="status-badge">MAX</span>
+                    </div>
+                    <div class="solicitud-fecha"><span class="status-badge">17/01/2024</span></div>
+                    <div class="solicitud-estado">
+                        <span class="status-badge">APROBADO</span>
+                    </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="solicitudes-row">
+                    <div class="solicitud-animal">
+                        <img src="https://placedog.net/100/100?id=12" alt="Luna">
+                        <span class="status-badge">LUNA</span>
+                    </div>
+                    <div class="solicitud-fecha"><span class="status-badge">11/07/2025</span></div>
+                    <div class="solicitud-estado">
+                        <span class="status-badge">EN REVISIÓN</span>
+                    </div>
+                </div>
+
+                <!-- Row 3 -->
+                <div class="solicitudes-row">
+                    <div class="solicitud-animal">
+                        <img src="https://placedog.net/100/100?id=13" alt="Rocky">
+                        <span class="status-badge">ROCKY</span>
+                    </div>
+                    <div class="solicitud-fecha"><span class="status-badge">14/02/2025</span></div>
+                    <div class="solicitud-estado">
+                        <span class="status-badge">RECHAZADO</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+    </div>
+</body>
+
+</html>
