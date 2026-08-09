@@ -28,6 +28,9 @@ export default function GestionMascotas() {
         description: '',
     });
     const [imageBase64, setImageBase64] = useState<string | null>(null);
+    const [galeria1, setGaleria1] = useState<string | null>(null);
+    const [galeria2, setGaleria2] = useState<string | null>(null);
+    const [galeria3, setGaleria3] = useState<string | null>(null);
 
     // Fetch animals on mount
     useEffect(() => {
@@ -60,6 +63,9 @@ export default function GestionMascotas() {
         setIsModalOpen(false);
         setFormData({ name: '', species: '', breed: '', age: '', description: '' });
         setImageBase64(null);
+        setGaleria1(null);
+        setGaleria2(null);
+        setGaleria3(null);
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,6 +74,17 @@ export default function GestionMascotas() {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImageBase64(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleGalleryChange = (setter: React.Dispatch<React.SetStateAction<string | null>>) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setter(reader.result as string);
             };
             reader.readAsDataURL(file);
         }
@@ -82,7 +99,8 @@ export default function GestionMascotas() {
             breed: formData.breed,
             age: formData.age,
             description: formData.description,
-            imageUrl: imageBase64
+            imageUrl: imageBase64,
+            galleryUrls: [galeria1, galeria2, galeria3].filter(Boolean)
         };
 
         try {
@@ -277,8 +295,22 @@ export default function GestionMascotas() {
                                 <input type="text" id="edad" value={formData.age} onChange={(e)=>setFormData({...formData, age: e.target.value})} placeholder="Ej: 2 años" />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="foto_simple">Agregar imagen</label>
+                                <label htmlFor="foto_simple">Foto principal</label>
                                 <input type="file" id="foto_simple" accept="image/*" onChange={handleFileChange} />
+                            </div>
+                            <div className="form-group" style={{ display: 'flex', gap: '10px' }}>
+                                <div style={{ flex: 1 }}>
+                                    <label htmlFor="foto_galeria_1">Galería 1</label>
+                                    <input type="file" id="foto_galeria_1" accept="image/*" onChange={handleGalleryChange(setGaleria1)} />
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                    <label htmlFor="foto_galeria_2">Galería 2</label>
+                                    <input type="file" id="foto_galeria_2" accept="image/*" onChange={handleGalleryChange(setGaleria2)} />
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                    <label htmlFor="foto_galeria_3">Galería 3</label>
+                                    <input type="file" id="foto_galeria_3" accept="image/*" onChange={handleGalleryChange(setGaleria3)} />
+                                </div>
                             </div>
                             <div className="modal-actions">
                                 <button type="button" className="btn-cancel" onClick={closeModal}>Cancelar</button>

@@ -1,5 +1,6 @@
 import './globals.css';
 import { ReactNode } from 'react';
+import BackgroundComponent from '../components/ui/background-components';
 
 export const metadata = {
   title: 'Fundación Lucky - Bienestar Animal',
@@ -16,7 +17,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
       </head>
       <body>
-        {children}
+        <BackgroundComponent>
+          {children}
+        </BackgroundComponent>
       </body>
     </html>
   );

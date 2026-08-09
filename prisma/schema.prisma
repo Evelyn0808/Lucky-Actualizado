@@ -47,6 +47,7 @@ model Animal {
   age         String?
   description String?
   imageUrl    String?
+  galleryUrls String[] @default([])
   status      AnimalStatus @default(DISPONIBLE)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

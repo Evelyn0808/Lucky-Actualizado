@@ -40,18 +40,31 @@ export default async function AnimalDetail({ params }: { params: Promise<{ id: s
                             />
                             
                             {/* Galería de Fotos Adicionales */}
-                            <div className="detail-gallery" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginTop: '16px' }}>
-                                <img 
-                                    src={animal.species.toLowerCase().includes('gato') ? 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=400' : 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=400'} 
-                                    alt={`${animal.name} jugando`} 
-                                    className="gallery-thumb"
-                                />
-                                <img 
-                                    src={animal.species.toLowerCase().includes('gato') ? 'https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&q=80&w=400' : 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&q=80&w=400'} 
-                                    alt={`${animal.name} durmiendo`} 
-                                    className="gallery-thumb"
-                                />
-                            </div>
+                            {((animal as any).galleryUrls && ((animal as any).galleryUrls as string[]).length > 0) ? (
+                                <div className="detail-gallery" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginTop: '16px' }}>
+                                    {((animal as any).galleryUrls as string[]).map((url, idx) => (
+                                        <img 
+                                            key={idx}
+                                            src={url} 
+                                            alt={`${animal.name} foto galería ${idx + 1}`} 
+                                            className="gallery-thumb"
+                                        />
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="detail-gallery" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginTop: '16px' }}>
+                                    <img 
+                                        src={animal.species.toLowerCase().includes('gato') ? 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=400' : 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=400'} 
+                                        alt={`${animal.name} jugando`} 
+                                        className="gallery-thumb"
+                                    />
+                                    <img 
+                                        src={animal.species.toLowerCase().includes('gato') ? 'https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&q=80&w=400' : 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&q=80&w=400'} 
+                                        alt={`${animal.name} durmiendo`} 
+                                        className="gallery-thumb"
+                                    />
+                                </div>
+                            )}
                         </div>
 
                         <div className="detail-info">

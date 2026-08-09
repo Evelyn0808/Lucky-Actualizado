@@ -30,6 +30,7 @@ export async function POST(request: Request) {
         age: data.age || null,
         imageUrl: data.imageUrl || null,
         description: data.description || null,
+        galleryUrls: data.galleryUrls || [],
       }
     });
 

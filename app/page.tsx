@@ -43,42 +43,83 @@ export default async function Home() {
           </div>
       </section>
 
-      {/* Categories Row */}
-      <section className="categories">
-          <div className="category-item">
-              <div className="cat-img-wrapper">
-                  <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
-                      alt="Perros" />
+      {/* Categories Row (Infinite Carousel) */}
+      <section className="categories-section">
+          <div className="categories-carousel">
+              <div className="categories-track">
+                  {/* Original Items */}
+                  <div className="category-item">
+                      <div className="cat-img-wrapper">
+                          <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                              alt="Perros" />
+                      </div>
+                      <span>Perros</span>
+                  </div>
+                  <div className="category-item">
+                      <div className="cat-img-wrapper">
+                          <img src="https://images.unsplash.com/photo-1495360010541-f48722b34f7d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                              alt="Gatos" />
+                      </div>
+                      <span>Gatos</span>
+                  </div>
+                  <div className="category-item">
+                      <div className="cat-img-wrapper">
+                          <img src="https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                              alt="Gatitos" />
+                      </div>
+                      <span>Gatitos</span>
+                  </div>
+                  <div className="category-item">
+                      <div className="cat-img-wrapper">
+                          <img src="https://images.unsplash.com/photo-1591160690555-5debfba289f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                              alt="Cachorros" />
+                      </div>
+                      <span>Cachorros</span>
+                  </div>
+                  <div className="category-item">
+                      <div className="cat-img-wrapper">
+                          <img src="https://images.unsplash.com/photo-1425082661705-1834bfd0999c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                              alt="Otros Animales" />
+                      </div>
+                      <span>Otros Animales</span>
+                  </div>
+                  {/* Duplicated Items */}
+                  <div className="category-item">
+                      <div className="cat-img-wrapper">
+                          <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                              alt="Perros" />
+                      </div>
+                      <span>Perros</span>
+                  </div>
+                  <div className="category-item">
+                      <div className="cat-img-wrapper">
+                          <img src="https://images.unsplash.com/photo-1495360010541-f48722b34f7d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                              alt="Gatos" />
+                      </div>
+                      <span>Gatos</span>
+                  </div>
+                  <div className="category-item">
+                      <div className="cat-img-wrapper">
+                          <img src="https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                              alt="Gatitos" />
+                      </div>
+                      <span>Gatitos</span>
+                  </div>
+                  <div className="category-item">
+                      <div className="cat-img-wrapper">
+                          <img src="https://images.unsplash.com/photo-1591160690555-5debfba289f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                              alt="Cachorros" />
+                      </div>
+                      <span>Cachorros</span>
+                  </div>
+                  <div className="category-item">
+                      <div className="cat-img-wrapper">
+                          <img src="https://images.unsplash.com/photo-1425082661705-1834bfd0999c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                              alt="Otros Animales" />
+                      </div>
+                      <span>Otros Animales</span>
+                  </div>
               </div>
-              <span>Perros</span>
-          </div>
-          <div className="category-item">
-              <div className="cat-img-wrapper">
-                  <img src="https://images.unsplash.com/photo-1495360010541-f48722b34f7d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
-                      alt="Gatos" />
-              </div>
-              <span>Gatos</span>
-          </div>
-          <div className="category-item">
-              <div className="cat-img-wrapper">
-                  <img src="https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
-                      alt="Gatitos" />
-              </div>
-              <span>Gatitos</span>
-          </div>
-          <div className="category-item">
-              <div className="cat-img-wrapper">
-                  <img src="https://images.unsplash.com/photo-1591160690555-5debfba289f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
-                      alt="Cachorros" />
-              </div>
-              <span>Cachorros</span>
-          </div>
-          <div className="category-item">
-              <div className="cat-img-wrapper">
-                  <img src="https://images.unsplash.com/photo-1425082661705-1834bfd0999c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
-                      alt="Otros Animales" />
-              </div>
-              <span>Otros Animales</span>
           </div>
       </section>
 
