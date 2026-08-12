@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Animal - Fundación Lucky</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Typography Constraint */
+        * {
+            font-weight: normal !important;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Global Layout */
+        body {
+            background-color: #d6891c;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        /* Main Title */
+        h2 {
+            color: white;
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Form Container */
+        .form-container {
+            background-color: white;
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form Groups (Stacked Vertically) */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 24px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Labels (Above inputs) */
+        label {
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 16px;
+        }
+
+        /* Inputs & Selects Styling */
+        input[type="text"],
+        select {
+            background-color: #eeb868; /* Dark-orange/mustard background */
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 16px;
+            color: #333;
+            outline: none;
+            width: 100%;
+            transition: opacity 0.2s;
+        }
+
+        input[type="text"]::placeholder {
+            color: rgba(51, 51, 51, 0.6);
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            opacity: 0.9;
+        }
+
+        /* Form Rows for 2 columns */
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 24px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        /* Photo Upload Section */
+        .photo-upload-area {
+            border: 2px dashed #eeb868;
+            border-radius: 12px;
+            padding: 50px 20px;
+            text-align: center;
+            background-color: #fffaf2;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-upload-area:hover {
+            background-color: #fcecd7;
+            border-color: #d6891c;
+        }
+
+        .photo-upload-area .icons {
+            font-size: 48px;
+            color: #d6891c;
+            margin-bottom: 15px;
+        }
+
+        .photo-upload-area p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* Action Buttons styling (optional, for navigation) */
+        .actions {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            flex: 1;
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .btn-submit {
+            background-color: #333;
+        }
+
+        .btn-cancel {
+            background-color: #999;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Agregar Animal</h2>
+
+    <div class="form-container">
+        <form action="#" method="POST">
+            <!-- Nombre -->
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ej: Max" required>
+            </div>
+
+            <!-- Especie -->
+            <div class="form-group">
+                <label for="especie">Especie</label>
+                <select id="especie" name="especie" required>
+                    <option value="" disabled selected>Selecciona una especie</option>
+                    <option value="perro">Perro</option>
+                    <option value="gato">Gato</option>
+                    <option value="conejo">Conejo</option>
+                    <option value="ave">Ave</option>
+                    <option value="otro">Otro</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <!-- Raza -->
+                <div class="form-group">
+                    <label for="raza">Raza</label>
+                    <input type="text" id="raza" name="raza" placeholder="Ej: Mestizo" required>
+                </div>
+
+                <!-- Edad -->
+                <div class="form-group">
+                    <label for="edad">Edad</label>
+                    <input type="text" id="edad" name="edad" required>
+                </div>
+            </div>
+
+            <!-- Foto del Animal (Upload Area) -->
+            <label class="photo-upload-area" for="foto">
+                <div class="icons">
+                    <i class="fa-solid fa-camera"></i>
+                    <i class="fa-solid fa-cloud-arrow-up" style="margin-left: 10px;"></i>
+                </div>
+                <p>Haz clic para seleccionar o arrastra una foto del animal (máx. 5MB)</p>
+                <input type="file" id="foto" name="foto" style="display: none;" accept="image/*">
+            </label>
+
+            <div class="actions">
+                <a href="gestion_mascotas.html" class="btn btn-cancel">Cancelar</a>
+                <button type="submit" class="btn btn-submit">Guardar Animal</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
