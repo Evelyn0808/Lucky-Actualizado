@@ -4,7 +4,7 @@ import { jwtVerify } from 'jose';
 
 const SECRET = new TextEncoder().encode('super-secret-jwt-key-for-lucky-app');
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     // 1. Verificar autenticación (solo admin puede cambiar estados)
     const token = request.headers.get('cookie')?.split('token=')[1]?.split(';')[0];
@@ -40,7 +40,7 @@ export async function PATCH(request: Request, { params }: { params: { id: string
   }
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     // 1. Verificar autenticación (solo admin puede borrar)
     const token = request.headers.get('cookie')?.split('token=')[1]?.split(';')[0];

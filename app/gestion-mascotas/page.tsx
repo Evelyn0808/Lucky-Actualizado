@@ -14,6 +14,8 @@ interface Animal {
     createdAt: string;
 }
 
+import { GradientWave } from "@/components/ui/gradient-wave";
+
 export default function GestionMascotas() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [animales, setAnimales] = useState<Animal[]>([]);
@@ -166,7 +168,17 @@ export default function GestionMascotas() {
 
     return (
         <div className="solicitudes-body" style={{ minHeight: '100vh', margin: 0 }}>
-            <div className="dashboard-layout">
+            {/* Pink/Purple Gradient Wave Background specifically for this page */}
+            <GradientWave
+                colors={["#ffffff", "#fb7185", '#e879f9', "#a3e635", "#ffffff"]}
+                shadowPower={4}
+                darkenTop={false} 
+                noiseFrequency={[0.0001, 0.0002]}
+                deform={{ incline: 0.2, noiseAmp: 100, noiseFlow: 2 }}
+                className="fixed top-0 left-0 -z-10"
+            />
+            
+            <div className="dashboard-layout" style={{ position: 'relative', zIndex: 10 }}>
                 {/* Left Sidebar */}
                 <aside className="solicitudes-sidebar">
                     <div className="sidebar-header">
