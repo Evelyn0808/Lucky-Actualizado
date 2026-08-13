@@ -4,10 +4,15 @@ import Footer from '../components/Footer';
 import { prisma } from '../lib/prisma';
 
 export default async function Home() {
-  const animales = await prisma.animal.findMany({
-    take: 4,
-    orderBy: { createdAt: 'desc' }
-  });
+  let animales = [];
+  try {
+    animales = await prisma.animal.findMany({
+      take: 4,
+      orderBy: { createdAt: 'desc' }
+    });
+  } catch (error) {
+    console.warn("Base de datos no conectada. Mostrando arreglo vacío para animales.");
+  }
 
   return (
     <>
